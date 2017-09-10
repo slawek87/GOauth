@@ -13,7 +13,7 @@ type User struct {
 
 	Username 			string		`gorm:"not null;unique"`
 	Password			string		`gorm:"not null;unique"`
-	TokenHistoryID		uint		`gorm:"null;unique"`
+	TokenHistoryID		uint		`gorm:"null; default: null"`
 }
 
 // Stores token history.

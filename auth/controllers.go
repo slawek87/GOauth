@@ -75,7 +75,6 @@ func (user *User) AuthenticateUser() (string, error) {
 
 	tokenHistory.CreatedAt = time.Now()
 	tokenHistory.UpdatedAt = time.Now()
-	tokenHistory.User = record
 	tokenHistory.Token = GenerateToken()
 
 	db.NewRecord(&tokenHistory)
