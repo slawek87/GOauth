@@ -5,7 +5,6 @@ import (
 	"log"
 	"bufio"
 	"strings"
-	"reflect"
 )
 
 type Settings struct {
@@ -20,13 +19,13 @@ func (settings *Settings) prepareConfigItem(item string) (string, string) {
 	key := strings.Trim(data[0], " ")
 	value := strings.Trim(data[1], " ")
 
-	return key, reflect.ValueOf(value).String()
+	return key, value
 }
 
 
 // method is reading config and returns go lang object in pattern map[string]interface{}.
 func (settings *Settings) Read(path string) map[string]string {
-	var result map[string]string
+	result := make(map[string]string)
 
 	file, err := os.Open(path)
 	if err != nil {
