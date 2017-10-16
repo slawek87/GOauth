@@ -24,6 +24,7 @@ func RegisterUserAPI(c *gin.Context) {
 	c.JSON(http.StatusCreated, map[string]interface{}{"results": &user})
 }
 
+//
 func AuthenticateUserAPI(c *gin.Context) {
 	user := User{}
 	c.Bind(&user)
@@ -59,6 +60,7 @@ func ResetUserPasswordAPI(c *gin.Context) {
 	c.JSON(http.StatusCreated, map[string]interface{}{"Result": true})
 }
 
+// To register user you have to send POST request with Name field and its value.
 func RegisterServiceAPI(c *gin.Context) {
 	service := Service{}
 	c.Bind(&service)
