@@ -21,6 +21,7 @@ func (user *User) ResetUserPassword() (*User, error){
 	}
 
 	db, _ := storage.InitDB()
+	defer db.Close()
 	db.Where(&User{Username:user.Username}).First(&record)
 
 	record.Password = hash
@@ -46,6 +47,7 @@ func (user *User) RegisterUser(service Service) (*User, error) {
 	user.UpdatedAt = time.Now()
 
 	db, _ := storage.InitDB()
+	defer db.Close()
 	db.NewRecord(&user)
 	query := db.Create(&user)
 
@@ -64,6 +66,7 @@ func (user *User) AuthenticateUser() (string, error) {
 	hash.Password = user.Password
 
 	db, _ := storage.InitDB()
+	defer db.Close()
 
 	if db.Where(&User{Username:user.Username}).Find(&record).Error != nil {
 		return "", errors.New("Username is incorrect.")
@@ -119,6 +122,7 @@ func (service *Service) RegisterService() (*Service, error) {
 	service.UpdatedAt = time.Now()
 
 	db, _ := storage.InitDB()
+	defer db.Close()
 	db.NewRecord(&service)
 	query := db.Create(&service)
 
