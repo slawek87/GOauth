@@ -26,7 +26,8 @@ func RegisterUserAPI(c *gin.Context) {
 	c.JSON(http.StatusCreated, map[string]interface{}{"results": &user})
 }
 
-//
+// Method returns Token which is needed to Authorized access.
+// To get valid Token you must send POST request with valid Username and Password.
 func AuthenticateUserAPI(c *gin.Context) {
 	user := User{}
 	c.Bind(&user)

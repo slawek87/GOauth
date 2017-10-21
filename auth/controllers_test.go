@@ -67,3 +67,26 @@ func TestResetUserPassword(t *testing.T) {
 
 	assert.NotEqual(t, registeredUser.UpdatedAt, userChangePassword.UpdatedAt, "UpdateAt cannot be the same.")
 }
+
+func TestAuthenticateUser(t *testing.T) {
+	InitMigrations()
+	defer utils.CleanTestDB()
+
+	service := Service{Name: "TestService"}
+	_, err := service.RegisterService()
+
+	if err != nil {
+		t.Fail()
+	}
+
+	username := "test@test.test"
+	password := "test123"
+
+	user := User{Username: username, Password: password}
+	user.RegisterUser(service)
+
+	user = User{Username: username, Password: password}
+	token, err := user.AuthenticateUser()
+
+	assert.NotEmpty(t, token,  "Token cannot be empty")
+}

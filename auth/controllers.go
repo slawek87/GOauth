@@ -59,7 +59,7 @@ func (user *User) RegisterUser(service Service) (*User, error) {
 }
 
 
-// This method compares username, password from POST request with data in db.
+// This method compares Username, Password from POST request with data in db.
 // The same data in db and in POST request means that user is authenticated correctly.
 func (user *User) AuthenticateUser() (string, error) {
 	var UserDB User
