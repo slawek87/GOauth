@@ -13,6 +13,10 @@ import (
 func (user *User) ResetUserPassword() (*User, error){
     var record User
 
+    if user.Password == "" {
+    	return user, errors.New("password cannot be empty")
+	}
+
 	password := utils.Hash{Password: user.Password}
 	hash, err := password.GetHash()
 
@@ -69,11 +73,11 @@ func (user *User) AuthenticateUser() (string, error) {
 	defer db.Close()
 
 	if db.Where(&User{Username:user.Username}).Find(&UserDB).Error != nil {
-		return "", errors.New("Username is incorrect.")
+		return "", errors.New("username is incorrect")
 	}
 
 	if hash.CheckPasswordHash(UserDB.Password) == false {
-		return "", errors.New("Password is incorrect.")
+		return "", errors.New("password is incorrect")
 	}
 
 	tokenHistory.CreatedAt = time.Now()

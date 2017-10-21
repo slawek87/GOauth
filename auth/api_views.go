@@ -48,6 +48,7 @@ func AuthorizeUserAPI(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{"Authorize": token.AuthorizeUser()})
 }
 
+// If you want to reset password You have to send POST request with Username and Password.
 func ResetUserPasswordAPI(c *gin.Context) {
 	user := User{}
 	c.Bind(&user)
