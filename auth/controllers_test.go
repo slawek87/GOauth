@@ -90,3 +90,27 @@ func TestAuthenticateUser(t *testing.T) {
 
 	assert.NotEmpty(t, token,  "Token cannot be empty")
 }
+
+func TestAuthorizeUser(t *testing.T) {
+	InitMigrations()
+	defer utils.CleanTestDB()
+
+	service := Service{Name: "TestService"}
+	_, err := service.RegisterService()
+
+	if err != nil {
+		t.Fail()
+	}
+
+	username := "test@test.test"
+	password := "test123"
+
+	user := User{Username: username, Password: password}
+	user.RegisterUser(service)
+
+	user = User{Username: username, Password: password}
+	token, err := user.AuthenticateUser()
+
+	authorizeToken := Token{Key: token}
+	assert.Equal(t, authorizeToken.AuthorizeUser(),  true,"Token value must be true")
+}
