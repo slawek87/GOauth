@@ -45,7 +45,7 @@ func AuthenticateUserAPI(c *gin.Context) {
 // To authorize user you must send POST request with valid Token.
 // To get valid Token you must use view AuthenticateUserAPI.
 func AuthorizeUserAPI(c *gin.Context) {
-	token := Token{Key: c.PostForm("Token")}
+	token := Token{Value: c.PostForm("Token")}
 
 	c.Bind(&token)
 	c.JSON(http.StatusOK, map[string]interface{}{"Authorize": token.AuthorizeUser()})

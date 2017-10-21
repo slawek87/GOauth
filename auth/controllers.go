@@ -90,7 +90,7 @@ func (user *User) AuthenticateUser() (string, error) {
 	UserDB.TokenHistoryID = tokenHistory.ID
 	db.Save(&UserDB)
 
-	token.Key = tokenHistory.Token
+	token.Value = tokenHistory.Token
 	token.SetToken()
 
 	return tokenHistory.Token, query.Error
@@ -103,15 +103,15 @@ func (token *Token) AuthorizeUser() bool {
 
 func (token *Token) SetToken() {
 	db, _ := storage.RedisDB()
-	token.Key = strings.Replace(token.Key, "-", "", -1)
-	db.Set(token.Key, true, TokenExpirationTime).Err()
+	token.Value = strings.Replace(token.Value, "-", "", -1)
+	db.Set(token.Value, true, TokenExpirationTime).Err()
 }
 
 
 func (token *Token) GetToken() bool {
 	db, _ := storage.RedisDB()
-	token.Key = strings.Replace(token.Key, "-", "", -1)
-	value, _ := db.Get(token.Key).Result()
+	token.Value = strings.Replace(token.Value, "-", "", -1)
+	value, _ := db.Get(token.Value).Result()
 	boolValue, _ := strconv.ParseBool(value)
 
 	return boolValue

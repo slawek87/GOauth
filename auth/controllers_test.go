@@ -111,6 +111,6 @@ func TestAuthorizeUser(t *testing.T) {
 	user = User{Username: username, Password: password}
 	token, err := user.AuthenticateUser()
 
-	authorizeToken := Token{Key: token}
+	authorizeToken := Token{Value: token}
 	assert.Equal(t, authorizeToken.AuthorizeUser(),  true,"Token value must be true")
 }

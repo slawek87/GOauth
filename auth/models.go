@@ -34,8 +34,8 @@ type Service struct {
 }
 
 type Token struct {
-    Key		string
-	Value 	bool
+    Value  string
+	Active bool
 }
 
 var TokenExpirationTime time.Duration = 8 * time.Hour // 8hrs
