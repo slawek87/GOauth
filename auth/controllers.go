@@ -58,7 +58,7 @@ func (user *User) RegisterUser(service Service) (*User, error) {
 // This method compares username, password from POST request with data in db.
 // The same data in db and in POST request means that user is authenticated correctly.
 func (user *User) AuthenticateUser() (string, error) {
-	var record User
+	var UserDB User
 	var tokenHistory TokenHistory
 	var token Token
 
@@ -68,11 +68,11 @@ func (user *User) AuthenticateUser() (string, error) {
 	db, _ := storage.InitDB()
 	defer db.Close()
 
-	if db.Where(&User{Username:user.Username}).Find(&record).Error != nil {
+	if db.Where(&User{Username:user.Username}).Find(&UserDB).Error != nil {
 		return "", errors.New("Username is incorrect.")
 	}
 
-	if hash.CheckPasswordHash(record.Password) == false {
+	if hash.CheckPasswordHash(UserDB.Password) == false {
 		return "", errors.New("Password is incorrect.")
 	}
 
@@ -83,8 +83,8 @@ func (user *User) AuthenticateUser() (string, error) {
 	db.NewRecord(&tokenHistory)
 	query := db.Create(&tokenHistory)
 
-	record.TokenHistoryID = tokenHistory.ID
-	db.Save(&record)
+	UserDB.TokenHistoryID = tokenHistory.ID
+	db.Save(&UserDB)
 
 	token.Key = tokenHistory.Token
 	token.SetToken()

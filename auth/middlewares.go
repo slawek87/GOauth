@@ -7,7 +7,7 @@ import (
 
 // This middleware is responds for ServiceAuthentication.
 // Fetches data from Authorization Header and returns correct Service instance.
-func AuthenticationMiddleware(c *gin.Context) {
+func AuthorizationMiddleware(c *gin.Context) {
 	var err error
 
 	token := c.GetHeader("Authorization")

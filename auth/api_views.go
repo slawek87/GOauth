@@ -6,11 +6,13 @@ import (
 )
 
 
+// You must give Password and Username in Post request to register user.
+// Remember about Authorisation Token.
 func RegisterUserAPI(c *gin.Context) {
 	user := User{}
 	c.Bind(&user)
 
-	service := c.MustGet("service").(Service)
+	service := c.MustGet("service").(Service) // take data from Authentication token.
 
 	_, err := user.RegisterUser(service)
 

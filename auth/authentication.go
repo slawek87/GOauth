@@ -13,7 +13,7 @@ type ServiceAuthentication struct {}
 
 
 // Use this method to authenticate service token.
-// Method is used in AuthenticationMiddleware.
+// Method is used in AuthorizationMiddleware.
 func (authentication *ServiceAuthentication) decodeToken(token string) (string, string, error) {
 	splitToken := strings.Split(token, " ")
 
@@ -50,7 +50,7 @@ func (authentication ServiceAuthentication) AuthenticateToken(token string) (Ser
 	db.Where(&Service{Name: service.Name, Token: service.Token}).First(&record)
 
 	if err != nil || &record == nil {
-		return service, errors.New("TokenHistory isn't correct.")
+		return service, errors.New("TokenHistory isn't correct")
 	}
 
 	return record, nil
